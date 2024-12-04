@@ -1,0 +1,71 @@
+---
+title: "class08"
+author: "Jo Bautista - A10684919"
+format: html
+---
+
+```{r}
+
+#Import Wisconsin Cancer data
+
+url <- "https://bioboot.github.io/bimm143_S20/class-material/WisconsinCancer.csv"
+wisc.df <- read.csv(url, row.names=1)
+
+#preview data
+head(wisc.df)
+
+#remove first column
+wisc.data <- wisc.df[,-1]
+
+head(wisc.data)
+
+diagnosis <- as.factor(wisc.df$diagnosis)
+
+#Q1. How many observations are in this dataset?
+num_observations <- nrow(wisc.data)
+num_observations
+
+#A1. 569 observations. 
+
+#Q2. How many of the observations have a malignant diagnosis?
+num_malignant <- sum(diagnosis == "M")  
+num_malignant
+
+#A2. 212.
+
+#Q3. How many variables/features in the data are suffixed with _mean?
+num_mean_vars <- length(grep("_mean$", names(wisc.data)))
+num_mean_vars
+
+#A3. 10.
+  
+#check column means and std
+colMeans(wisc.data)
+
+apply(wisc.data,2,sd)
+
+wisc.pr <- prcomp(wisc.data)
+
+summary(wisc.pr)
+
+#Q4. From your results, what proportion of the original variance is captured by the first principal components (PC1)?
+
+#A4. The proportion of variance captured by the first principal component (PC1) is 0.4427 (44.27% of the original variance).
+
+#Q5. How many principal components (PCs) are required to describe at least 70% of the original variance in the data?
+
+#Q5. Cumulative Proportion for PC1: 0.4427.  Cumulative Proportion for PC2: 0.6324. Cumulative Proportion for PC3: 0.72636.  At PC3, the cumulative proportion exceeds 70%. Thus, 3 principal components are required to describe at least 70% of the original variance.
+
+#Q6. How many principal components (PCs) are required to describe at least 90% of the original variance in the data?
+ 
+#A6. Cumulative Proportion for PC1: 0.4427.  Cumulative Proportion for PC2: 0.6324.  Cumulative Proportion for PC3: 0.72636.  Cumulative Proportion for PC4: 0.79239.  Cumulative Proportion for PC5: 0.84734.  Cumulative Proportion for PC6: 0.88759.  Cumulative Proportion for PC7: 0.91010.  At PC7, the cumulative proportion exceeds 90%. Thus, 7 principal components are required to describe at least 90% of the original variance.
+ 
+
+biplot(wisc.pr)
+
+#Q7. What stands out to you about this plot? Is it easy or difficult to understand? Why?
+
+#A7. Need to generate own plots to gain usable insight of PCA results.
+
+```
+
